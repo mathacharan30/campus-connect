@@ -22,6 +22,12 @@ import ProtectedRoute from './ProtectedRoute';
 import { NotAuthorized } from './components/NotAuth';
 import UploadHackathon from './pages/uploadHackathon';
 import JobUpload from './pages/uploadjob';
+import { EditQuestion } from './pages/EditQuestion';
+import { EditAnswer } from './pages/EditAnswer';
+import { EditBlog } from './pages/EditBlog';
+import { EditNote } from './pages/EditNote';
+import { EditJob } from './pages/EditJob';
+import { EditHackathon } from './pages/EditHackathon';
 function App() {
   const location = useLocation();
   const hideNavbarAndFooter = location.pathname === '/';
@@ -50,6 +56,12 @@ function App() {
               <Route path="/jobs" element={<ProtectedRoute element={<JobsAndHackathons />} allowedRoles={['teacher', 'student','alumni']} />} />
               <Route path="/uploadhackathon" element={<ProtectedRoute element={<UploadHackathon />} allowedRoles={['teacher', 'student','alumni']} />} />
               <Route path="/uploadjob" element={<ProtectedRoute element={<JobUpload />} allowedRoles={['teacher', 'student','alumni']} />} />
+              <Route path="/edit-question/:id" element={<ProtectedRoute element={<EditQuestion />} allowedRoles={['teacher', 'student']} />} />
+              <Route path="/edit-answer/:qid" element={<ProtectedRoute element={<EditAnswer />} allowedRoles={['teacher', 'student']} />} />
+              <Route path="/edit-blog/:id" element={<ProtectedRoute element={<EditBlog />} allowedRoles={['alumni']} />} />
+              <Route path="/edit-note/:id" element={<ProtectedRoute element={<EditNote />} allowedRoles={['teacher', 'student']} />} />
+              <Route path="/edit-job/:id" element={<ProtectedRoute element={<EditJob />} allowedRoles={['teacher', 'student','alumni']} />} />
+              <Route path="/edit-hackathon/:id" element={<ProtectedRoute element={<EditHackathon />} allowedRoles={['teacher', 'student','alumni']} />} />
             </Routes>
           </CSSTransition>
         </TransitionGroup>

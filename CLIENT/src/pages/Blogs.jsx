@@ -27,13 +27,13 @@ const navigate =useNavigate();
     }, []);
 
 
-    if (error) return <p>Error: {error.message}</p>;
+    if (error) return <p className="text-center text-red-400 py-10">Error: {error.message}</p>;
     if (loading) return <Loading />;
 
     return (
-        <>
+        <div className="bg-slate-900 min-h-screen pb-20">
             <div className="flex items-center justify-center">
-                <Button className="bg-cyan-300 my-10 w-2/3" onClick={() => navigate('/uploadblogs')}>Write a Blog</Button>
+                <Button className="bg-blue-600 hover:bg-blue-700 my-10 w-2/3 text-white" onClick={() => navigate('/uploadblogs')}>Write a Blog</Button>
             </div>
             <div className="flex items-center justify-center my-10">
                 <div className="grid md:grid-cols-2 gap-10 ">
@@ -42,6 +42,6 @@ const navigate =useNavigate();
                     })} 
                 </div>
             </div>
-        </>
+        </div>
     )
 }

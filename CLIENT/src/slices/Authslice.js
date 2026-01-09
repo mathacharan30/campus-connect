@@ -3,23 +3,28 @@
 //use that 
 import { createSlice ,createAsyncThunk} from "@reduxjs/toolkit";
 import axios from '../axios.jsx';
-import { useNavigate } from "react-router-dom";
+
+// Rehydrate user from localStorage on page refresh
+let persistedUser = null;
+try {
+  const raw = localStorage.getItem('cc_user');
+  if (raw) persistedUser = JSON.parse(raw);
+} catch (_) {}
 export const loginUser=createAsyncThunk('loginUser',async(data)=>{
     const response = await axios.post("/api/user/login",data);
     return response.data;
 }) 
 
 export const logoutUser=createAsyncThunk('logoutUser',async()=>{
-    const navigate=useNavigate();
     await axios.get("/api/user/logout");
-    navigate('/');
+    return true;
 })
 
 
 const authSlice=createSlice({
     name:'authUser',
     initialState: {
-        user: null,
+        user: persistedUser,
         status: 'idle',
       },
     extraReducers:(builder)=>{
@@ -32,6 +37,7 @@ const authSlice=createSlice({
             state.error=false;
             state.success=true;
             state.user = action.payload;
+            try { localStorage.setItem('cc_user', JSON.stringify(action.payload)); } catch (_) {}
         })
         builder.addCase(loginUser.rejected,(state,action)=>{
             state.request=false;
@@ -46,6 +52,7 @@ const authSlice=createSlice({
             state.error=false;
             state.success=false;
             state.user = null;
+            try { localStorage.removeItem('cc_user'); } catch (_) {}
         })
         builder.addCase(logoutUser.rejected,(state,action)=>{
             state.request=false;

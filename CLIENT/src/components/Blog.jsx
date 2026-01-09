@@ -18,7 +18,7 @@ export function Blog({data}) {
     }
     
     return (
-        <Card className="max-w-[24rem] overflow-hidden">
+        <Card className="max-w-[24rem] overflow-hidden bg-slate-800 border border-slate-700">
             {/* <CardHeader
                 floated={false}
                 shadow={false}
@@ -32,16 +32,16 @@ export function Blog({data}) {
             </CardHeader> */}
             <CardBody>
                 <div className="md:flex-row md:items-center md:justify md:gap-3 flex-col gap-3">
-                    <Typography variant="h4" color="blue-gray">
+                    <Typography variant="h4" color="white">
                         {data.name}
                     </Typography>
                 </div>
-                <Typography variant="lead" color="gray" className="mt-3 font-normal">
+                <Typography variant="lead" color="gray" className="mt-3 font-normal text-gray-400">
                     {data.headline}
                 </Typography>
             </CardBody>
             <CardFooter className="flex items-center justify-between">
-                <Button onClick={()=>handleClick()}>view full blog</Button>
+                <Button className="bg-blue-600 hover:bg-blue-700 text-white" onClick={()=>handleClick()}>view full blog</Button>
                 {/* <Typography className="font-normal">blog-upload date</Typography> */}
             </CardFooter>
         </Card>

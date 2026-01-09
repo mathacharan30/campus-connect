@@ -26,14 +26,14 @@ export const QNA = () => {
     fetchData(); 
   }, []); 
 
-    if (error) return <p>Error: {error.message}</p>;
+    if (error) return <p className="text-center text-red-400 py-10">Error: {error.message}</p>;
     if (loading) return <Loading/>;
     return (
-        <>
+        <div className="bg-slate-900 min-h-screen">
             <div className="flex items-center justify-center">
-                <Button className="bg-cyan-300 my-10 w-2/3" onClick={() => navigate('/postQn')}>Ask a question</Button>
+                <Button className="bg-blue-600 hover:bg-blue-700 my-10 w-2/3 text-white" onClick={() => navigate('/postQn')}>Ask a question</Button>
             </div>
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center pb-20">
                 <div className="grid grid-cols-3 gap-5">
                     {data.map((question,index)=>{
                       return <Question key={index} data={question} />
@@ -41,7 +41,7 @@ export const QNA = () => {
                     
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 //after comnnecting the backend we can map the questions based on todays date 

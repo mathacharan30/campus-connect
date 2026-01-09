@@ -1,16 +1,41 @@
 const express = require("express");
 const router = express.Router();
 const user = require('../models/userModel');
-const bycrypt = require("bcrypt");
+const bycrypt = require("bcryptjs");
 
 router.post('/signup', async (req, res) => {
-    const { username, email, password ,USN,semester,userRole} = req.body;
-    const newUser = new user({ username, email, password ,USN,semester,userRole});
     try {
-        const new2 = await newUser.save();
-        res.send("user registered successfully");
+        const { username, email, password, USN, semester, userRole } = req.body;
+        // basic presence checks
+        if (!username || !email || !password || !userRole) {
+            return res.status(400).json({ message: 'username, email, password and userRole are required' });
+        }
+        if (userRole === 'student') {
+            if (!USN || semester === undefined || semester === null) {
+                return res.status(400).json({ message: 'USN and semester are required for students' });
+            }
+        }
+
+        // prevent duplicates by username/email
+        const existing = await user.findOne({ $or: [{ email }, { username }] });
+        if (existing) {
+            return res.status(409).json({ message: 'Email or username already exists' });
+        }
+
+        const payload = {
+            username,
+            email,
+            password,
+            userRole,
+            // only include USN/semester for students
+            ...(userRole === 'student' ? { USN, semester } : {})
+        };
+        const newUser = new user(payload);
+        await newUser.save();
+        return res.status(201).json({ message: 'user registered successfully' });
     } catch (error) {
-        return res.status(400).json({ message: error });
+        // surface meaningful error info
+        return res.status(400).json({ message: error?.message || 'Signup failed', code: error?.code, errors: error?.errors });
     }
 });
 

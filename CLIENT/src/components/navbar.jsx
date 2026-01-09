@@ -14,8 +14,13 @@ import { logoutUser } from '../slices/Authslice';
 function NavList() {
   const navigate=useNavigate();
   const dispatch=useDispatch();
-  const logout=()=>{
-    dispatch(logoutUser());
+  const logout=async()=>{
+    try{
+      await dispatch(logoutUser()).unwrap();
+      navigate('/');
+    }catch(e){
+      console.error('Logout failed', e);
+    }
   }
   
   return (
@@ -82,13 +87,13 @@ export function NavbarSimple() {
   }, []);
   const navigate = useNavigate();
   return (
-    <Navbar className="mx-auto max-w-screen-xl px-6 py-3 mt-5">
-      <div className="flex items-center justify-between text-blue-gray-900">
+    <Navbar className="sticky top-0 z-40 bg-slate-900/80 backdrop-blur supports-[backdrop-filter]:bg-slate-900/60 border-b border-slate-700 mx-auto max-w-screen-xl px-6 py-3">
+      <div className="flex items-center justify-between text-gray-100">
         <Typography
           as="a"
           href="#"
           variant="h6"
-          className="mr-4 cursor-pointer py-1.5 text-custom-blue"
+          className="mr-4 cursor-pointer py-1.5 text-blue-400"
           onClick={() => navigate('/')}
         >
           Campus Connect
@@ -100,7 +105,7 @@ export function NavbarSimple() {
         </div>
         <IconButton
           variant="text"
-          className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
+          className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden text-gray-100"
           ripple={false}
           onClick={() => setOpenNav(!openNav)}
         >

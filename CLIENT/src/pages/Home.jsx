@@ -36,22 +36,22 @@ export const Home = () => {
 
   const user = useSelector(state => state.authUser.user);
   return (
-    <div className="min-h-screen bg-gradient-to-r from-cyan-500 to-blue-500 text-white flex flex-col items-center justify-center px-4 md:px-8 lg:px-16">
+    <div className="min-h-screen bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white flex flex-col items-center justify-center px-4 md:px-8 lg:px-16">
       <div className="h-screen relative flex flex-col items-center justify-center text-center">
         <img src={logo} className='h-96 w-96'></img>
-        <h1 className="text-white bg-clip-text text-transparent text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 whitespace-nowrap overflow-hidden border-r-4 border-white animate-typing">
+        <h1 className="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 whitespace-nowrap overflow-hidden border-r-4 border-blue-400 animate-typing">
           Campus Connect
         </h1>
-        <p className="text-white bg-clip-text text-transparent text-lg sm:text-xl md:text-2xl lg:text-3xl mb-12 px-4">
+        <p className="text-gray-300 text-lg sm:text-xl md:text-2xl lg:text-3xl mb-12 px-4">
           Linking Students, Alumni, and Industry
         </p>
         {
           !user &&
           <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mb-12">
-            <button onClick={() => navigate('/signup')} className="bg-white text-blue-600 font-semibold py-2 px-4 rounded-full shadow-lg transform transition duration-500 hover:scale-105 hover:bg-custom-blue hover:text-white">
+            <button onClick={() => navigate('/signup')} className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-full shadow-lg transform transition duration-500 hover:scale-105 hover:bg-blue-700">
               Signup
             </button>
-            <button onClick={() => navigate('/login')} className="bg-white text-blue-600 font-semibold py-2 px-4 rounded-full shadow-lg transform transition duration-500 hover:scale-105 hover:bg-custom-blue hover:text-white">
+            <button onClick={() => navigate('/login')} className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-full shadow-lg transform transition duration-500 hover:scale-105 hover:bg-blue-700">
               Login
             </button>
           </div>
@@ -59,16 +59,16 @@ export const Home = () => {
         {
          user && ['teacher', 'student'].includes(user.userRole) && 
           <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mb-12">
-            <button onClick={() => navigate('/questions')} className="bg-white text-blue-600 font-semibold py-2 px-4 rounded-full shadow-lg transform transition duration-500 hover:scale-105 hover:bg-custom-blue hover:text-white">
+            <button onClick={() => navigate('/questions')} className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-full shadow-lg transform transition duration-500 hover:scale-105 hover:bg-blue-700">
               QNA 
             </button>
-            <button onClick={() => navigate('/viewnotes')} className="bg-white text-blue-600 font-semibold py-2 px-4 rounded-full shadow-lg transform transition duration-500 hover:scale-105 hover:bg-custom-blue hover:text-white">
+            <button onClick={() => navigate('/viewnotes')} className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-full shadow-lg transform transition duration-500 hover:scale-105 hover:bg-blue-700">
               Materials
             </button>
-            <button onClick={() => navigate('/blogs')} className="bg-white text-blue-600 font-semibold py-2 px-4 rounded-full shadow-lg transform transition duration-500 hover:scale-105 hover:bg-custom-blue hover:text-white">
+            <button onClick={() => navigate('/blogs')} className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-full shadow-lg transform transition duration-500 hover:scale-105 hover:bg-blue-700">
               Placement Blogs
             </button>
-            <button onClick={() => navigate('/jobs')} className="bg-white text-blue-600 font-semibold py-2 px-4 rounded-full shadow-lg transform transition duration-500 hover:scale-105 hover:bg-custom-blue hover:text-white">
+            <button onClick={() => navigate('/jobs')} className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-full shadow-lg transform transition duration-500 hover:scale-105 hover:bg-blue-700">
               Jobs & Hackathons
             </button>
           </div>
@@ -76,10 +76,10 @@ export const Home = () => {
         {
          user&& ['alumni'].includes(user.userRole) && 
           <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mb-12">
-            <button onClick={() => navigate('/blogs')} className="bg-white text-blue-600 font-semibold py-2 px-4 rounded-full shadow-lg transform transition duration-500 hover:scale-105 hover:bg-custom-blue hover:text-white">
+            <button onClick={() => navigate('/blogs')} className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-full shadow-lg transform transition duration-500 hover:scale-105 hover:bg-blue-700">
               Placement Blogs
             </button>
-            <button onClick={() => navigate('/')} className="bg-white text-blue-600 font-semibold py-2 px-4 rounded-full shadow-lg transform transition duration-500 hover:scale-105 hover:bg-custom-blue hover:text-white">
+            <button onClick={() => navigate('/')} className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-full shadow-lg transform transition duration-500 hover:scale-105 hover:bg-blue-700">
               Jobs & Hackathons
             </button>
           </div>
@@ -97,11 +97,11 @@ const FeatureCard = ({ feature }) => {
 
   return (
     <div
-      className={`transform transition duration-500 ease-in-out bg-white  bg-opacity-20 backdrop-blur-lg rounded-lg p-6 shadow-lg flex flex-col items-center text-center`}
+      className={`transform transition duration-500 ease-in-out bg-slate-800 bg-opacity-60 backdrop-blur-lg rounded-lg p-6 shadow-lg flex flex-col items-center text-center border border-slate-700 hover:border-blue-500`}
     >
       <div className="text-6xl mb-4">{feature.icon}</div>
-      <h3 className="text-2xl font-semibold mb-2">{feature.title}</h3>
-      <p>{feature.description}</p>
+      <h3 className="text-2xl font-semibold mb-2 text-white">{feature.title}</h3>
+      <p className="text-gray-300">{feature.description}</p>
     </div>
   );
 };

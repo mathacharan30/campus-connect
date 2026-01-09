@@ -1,10 +1,11 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Notes } from '../components/Notes';
-import { useState } from 'react';
 import { Loading } from '../components/Loading';
 import axios from '../axios';
-import { Button } from "@material-tailwind/react";
 import { useNavigate } from 'react-router-dom';
+import PageContainer from '../components/ui/PageContainer';
+import SectionHeader from '../components/ui/SectionHeader';
+import PrimaryButton from '../components/ui/PrimaryButton';
 export const ViewNotes = () => {
 
     const navigate=useNavigate();
@@ -27,22 +28,27 @@ export const ViewNotes = () => {
         fetchData();
     }, []);
 
-    if (error) return <p>Error: {error.message}</p>;
+    if (error) return <p className="text-center text-red-400 py-10">Error: {error.message}</p>;
     if (loading) return <Loading />;
 
     return (
-        <>
-            <div className="flex items-center justify-center">
-                <Button className="bg-cyan-300 my-10 w-2/3" onClick={() => navigate('/uploadnotes')}>Upload Notes</Button>
-            </div>
-            <div className='flex items-center justify-center my-8 '>
-                <div className='grid sm:grid-cols-2 lg:grid-cols-4 gap-5 md:grid-cols-3'>
-                    {notes.map((data, index) => {
-                        return <Notes key={index} data={data} />
-                    })}
-                </div>
-            </div>
-        </>
+      <PageContainer>
+        <SectionHeader
+          title="Lecture Materials"
+          subtitle="View and share notes and textbooks"
+          actions={
+            <PrimaryButton onClick={() => navigate('/uploadnotes')}>
+              Upload Material
+            </PrimaryButton>
+          }
+        />
+
+        <div className='grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
+          {notes.map((data, index) => (
+            <Notes key={index} data={data} />
+          ))}
+        </div>
+      </PageContainer>
     )
 }
 //this component is subject wise notes

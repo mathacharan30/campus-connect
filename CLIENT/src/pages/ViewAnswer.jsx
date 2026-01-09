@@ -1,8 +1,7 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
 import { Loading } from '../components/Loading';
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from '../axios';
 import { useSelector } from 'react-redux';
 export const ViewAnswer = () => {
@@ -11,7 +10,9 @@ export const ViewAnswer = () => {
     const [Question, setQuestion] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const role = useSelector(state => state.authUser.user.userRole);
+    const role = useSelector(state => state.authUser.user?.userRole);
+    const userId = useSelector(state => state.authUser.user?._id);
+    const navigate = useNavigate();
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -31,45 +32,67 @@ export const ViewAnswer = () => {
 
 
     if (error) return <p>Error: {error.message}</p>;
-    if (loading) {
-        return <Loading />
-    }
+    if (loading) return <Loading />
 
-    const qnid = answerObj.q_id;
+    const qnid = answerObj?.q_id;
+    const isOwner = answerObj && userId && String(answerObj.user_id) === String(userId);
     const verify = async () => {
         const response = await axios.post(`/api/answers/isVerified/${qnid}`);
     }
+    const onDelete = async () => {
+        if(!confirm('Delete this answer?')) return;
+        try{
+            await axios.delete(`/api/answers/delete/${answerObj._id}`);
+            navigate(`/answer/${qnid}`);
+        }catch(e){
+            console.error(e);
+        }
+    }
 
     return (
-        <>
+        <div className="bg-slate-900 min-h-screen pb-20">
             <div className="flex item-center justify-center my-5 ">
-                <div className="shadow-lg shadow-black bg-white-400 text-black h-fit w-2/4 border-2 border-black p-7 rounded-lg">
+                <div className="shadow-lg bg-slate-800 text-white h-fit w-2/4 border-2 border-slate-700 p-7 rounded-lg">
                     <div className="flex justify-between">
                         <h1 className="text-2xl text-bold">@{Question.username}</h1>
                         { answerObj.isVerified ===true &&
-                            <Button color="white" className="text-green-500">verified</Button>
+                            <Button className="text-green-400 border-2 border-green-400">verified</Button>
                         }
                     </div>
-                    <h1 className="text-2xl text-bold">{Question.question}</h1>
-                    <p className="my-5">
-                        <h2>Answered by @{answerObj.username}</h2>
-                        <h2>Answer:</h2>
+                    <h1 className="text-2xl text-bold text-white">{Question.question}</h1>
+                    {Question?.image && (
+                        <div className="flex items-center justify-center my-4">
+                            <img src={Question.image} alt="Question attachment" className="max-h-96 max-w-xl rounded border border-slate-600" />
+                        </div>
+                    )}
+                    <p className="my-5 text-gray-300">
+                        <h2 className="text-white font-semibold">Answered by @{answerObj.username}</h2>
+                        <h2 className="text-white font-semibold">Answer:</h2>
                         <p>
                         {answerObj.answer}
                         </p>
                     </p>
-                    {/* <div className="flex item-center justify-center ">
-                        <img src="https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?cs=srgb&dl=pexels-souvenirpixels-417074.jpg&fm=jpg" alt="no answer image "
-                            className="h-full max-w-xl hover:scale-150 " />
-                    </div> */}
+                    {answerObj?.image && (
+                        <div className="flex items-center justify-center my-4">
+                            <img src={answerObj.image} alt="Answer attachment" className="max-h-96 max-w-xl rounded border border-slate-600" />
+                        </div>
+                    )}
                     <div className="mx-5 my-5 flex justify-between ">
-                        {
-                           answerObj.isVerified ===false && role === 'teacher' && <Button  onClick={()=>verify()}> verify </Button>
-                        }
+                        <div className="flex gap-2">
+                            {isOwner && (
+                                <>
+                                  <Button className="bg-blue-600 hover:bg-blue-700 text-white" onClick={()=>navigate(`/edit-answer/${qnid}`)}>Edit</Button>
+                                  <Button className="bg-red-600 hover:bg-red-700 text-white" onClick={onDelete}>Delete</Button>
+                                </>
+                            )}
+                        </div>
+                        {answerObj.isVerified === false && role === 'teacher' && (
+                            <Button className="bg-blue-600 hover:bg-blue-700 text-white" onClick={()=>verify()}>verify</Button>
+                        )}
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 //with the parameters u will get the answer for the question

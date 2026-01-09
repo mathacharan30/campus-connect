@@ -1,34 +1,33 @@
-const mongoose=require("mongoose")
-const schema=mongoose.Schema
-const questions=require("./questions.js")
-const userInfo=require("./userModel.js")
-const ans_schema=schema({
-    isVerified:{
-        type:Boolean,
-        default:false,
+const mongoose = require("mongoose")
+const schema = mongoose.Schema
+const questions = require("./questions.js")
+const userInfo = require("./userModel.js")
+const ans_schema = schema({
+    isVerified: {
+        type: Boolean,
+        default: false,
     },
-    answer:{
-        type:String,
-        require
+    answer: {
+        type: String,
+        required: true
     },
-    username:{
-        type:String
+    username: {
+        type: String
     },
-    image:{
-        type:schema.Types.Mixed
+    image: {
+        type: schema.Types.Mixed
     },
-    user_id:{
-        type:schema.Types.ObjectId,
-        ref:"userInfo",
-        
+    user_id: {
+        type: schema.Types.ObjectId,
+        ref: "user",
     },
-    q_id:{
-        type:schema.Types.ObjectId,
-        ref:"questions"
+    q_id: {
+        type: schema.Types.ObjectId,
+        ref: "question"
     }
-    
-},{
-    timestamp:true
+
+}, {
+    timestamps: true
 })
-const answers=mongoose.model("answer",ans_schema)
-module.exports=answers
+const answers = mongoose.model("answer", ans_schema)
+module.exports = answers

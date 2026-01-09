@@ -29,31 +29,31 @@ export function Login() {
   }
  
   return (
-    <div className="flex items-center justify-center mt-40">
-      <Card className="w-96">
+    <div className="flex items-center justify-center min-h-screen bg-slate-900">
+      <Card className="w-96 bg-slate-800 border border-slate-700">
         <CardHeader
           variant="gradient"
-          className="mb-4 grid h-28 place-items-center bg-custom-blue"
+          className="mb-4 grid h-28 place-items-center bg-gradient-to-r from-blue-600 to-blue-700"
         >
           <Typography variant="h3" color="white">
             Login
           </Typography>
         </CardHeader>
         <CardBody className="flex flex-col gap-4">
-          <Input required label="Username" type="string" size="lg" onChange={(e) => setUsername(e.target.value)} />
-          <Input required label="Password" type="password" size="lg" onChange={(e) => setPassword(e.target.value)} />
+          <Input required label="Username" type="string" size="lg" onChange={(e) => setUsername(e.target.value)} className="text-white" />
+          <Input required label="Password" type="password" size="lg" onChange={(e) => setPassword(e.target.value)} className="text-white" />
         </CardBody>
         <CardFooter className="pt-0">
-          <Button className="bg-custom-blue"  fullWidth onClick={() => loginHandler()}>
+          <Button className="bg-blue-600 hover:bg-blue-700"  fullWidth onClick={() => loginHandler()}>
             login
           </Button>
-          <Typography variant="small" className="mt-6 flex justify-center">
+          <Typography variant="small" className="mt-6 flex justify-center text-gray-300">
             Don&apos;t have an account?
             <Typography
               as="a"
               href="#signup"
               variant="small"
-              className="ml-1 font-bold text-custom-blue"
+              className="ml-1 font-bold text-blue-400 hover:text-blue-300"
               onClick={() => navigate('/signup')}
             >
               Sign up

@@ -3,6 +3,7 @@ const schema=mongoose.Schema
 const ans_schema=require("./answers")
 
 const q_schema=schema({
+    user_id: { type: schema.Types.ObjectId, ref: 'user' },
     isanswered:{
         type:Boolean,
         default:false

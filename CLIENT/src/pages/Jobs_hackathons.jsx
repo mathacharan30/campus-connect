@@ -1,7 +1,10 @@
 import React from 'react';
 import {JobsComponent} from '../components/jobs';
 import {HackathonsComponent} from '../components/hackathons';
-import { Button } from "@material-tailwind/react";
+import PageContainer from '../components/ui/PageContainer';
+import SectionHeader from '../components/ui/SectionHeader';
+import PrimaryButton from '../components/ui/PrimaryButton';
+import Card from '../components/ui/Card';
 const jobs = [
     { userId: 'user1', jobRole: 'Frontend Developer', jobLink: 'https://example.com/job1' },
     { userId: 'user2', jobRole: 'Backend Developer', jobLink: 'https://example.com/job2' },
@@ -44,24 +47,29 @@ export const JobsAndHackathons = () => {
     if (error) return <p>Error: {error.message}</p>;
     if (loading) return <Loading />;
     return (
-        <>
-            <div className="flex items-center justify-center">
-                <Button className="bg-cyan-300 mt-4 w-2/3" onClick={() => navigate('/uploadjob')}>Post a Job</Button>
-            </div>
-            <div className="flex items-center justify-center">
-                <Button className="bg-cyan-300 mt-1 mb-10 w-2/3" onClick={() => navigate('/uploadhackathon')}>Post a Hackathon</Button>
-            </div>
-            <div className="container mx-auto p-4">
-                <div className="flex flex-col lg:flex-row">
-                    <div className="w-full lg:w-3/4">
-                        <JobsComponent jobs={jobs} />
-                    </div>
-                    <div className="w-full lg:w-3/4 lg:ml-4">
-                        <HackathonsComponent hackathons={hackathons} />
-                    </div>
-                </div>
-            </div>
-        </>
+      <PageContainer>
+        <SectionHeader
+          title="Jobs & Hackathons"
+          subtitle="Discover opportunities and share new ones"
+          actions={(
+            <>
+              <PrimaryButton onClick={() => navigate('/uploadjob')}>Post a Job</PrimaryButton>
+              <PrimaryButton className="!bg-blue-600/90" onClick={() => navigate('/uploadhackathon')}>Post a Hackathon</PrimaryButton>
+            </>
+          )}
+        />
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <Card className="p-4">
+            <h3 className="text-xl font-semibold mb-3">Jobs</h3>
+            <JobsComponent jobs={jobs} />
+          </Card>
+          <Card className="p-4">
+            <h3 className="text-xl font-semibold mb-3">Hackathons</h3>
+            <HackathonsComponent hackathons={hackathons} />
+          </Card>
+        </div>
+      </PageContainer>
     );
 }; 
 

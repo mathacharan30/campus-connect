@@ -10,6 +10,7 @@ export const PostQuestion = () => {
   const [subject, setSubject] = useState('');
   const [image, setImage] = useState(null);
   const username=useSelector(state=>state.authUser.user.name);
+  const userId=useSelector(state=>state.authUser.user._id);
   const navigate=useNavigate();
   //we have to use the function then only we can 
   //able to display the notification message 
@@ -17,16 +18,14 @@ export const PostQuestion = () => {
   const dispatch=useDispatch();
   const handleSubmit = async(e) => {
     e.preventDefault();
-    const questionData = {
-      question: question,
-      subject: subject,
-      image:JSON.stringify({
-        base64:image
-      }),
-      username:username,
-    }
+    const form = new FormData();
+    form.append('question', question);
+    form.append('subject', subject);
+    form.append('username', username);
+    form.append('user_id', userId);
+    if (image) form.append('image', image);
     try{ 
-      const response = await axios.post('/api/questions/postQn',questionData);
+      const response = await axios.post('/api/questions/postQn', form, { headers: { 'Content-Type': 'multipart/form-data' }});
       dispatch(notify({message:'Question Posted Successfully',type:'success'}));
       navigate('/questions');
     }catch(err)
@@ -37,9 +36,9 @@ export const PostQuestion = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto bg-white p-8 shadow-md rounded my-10">
+    <form onSubmit={handleSubmit} className="max-w-md mx-auto bg-slate-800 border border-slate-700 p-8 shadow-md rounded my-10">
       <div className="mb-4">
-        <label htmlFor="field1" className="block text-gray-700 text-sm font-bold mb-2">
+        <label htmlFor="field1" className="block text-gray-300 text-sm font-bold mb-2">
           Whats your Question ?
         </label>
         <textarea
@@ -49,11 +48,11 @@ export const PostQuestion = () => {
           cols={10}
           value={question}
           onChange={(e) => setQusetion(e.target.value)}
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow appearance-none bg-slate-700 border border-slate-600 rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
         />
       </div>
       <div className="mb-4">
-        <label   htmlFor="field2" className="block text-gray-700 text-sm font-bold mb-2">
+        <label   htmlFor="field2" className="block text-gray-300 text-sm font-bold mb-2">
           Subject
         </label>
         <input
@@ -63,18 +62,18 @@ export const PostQuestion = () => {
           id="field2"
           value={subject}
           onChange={(e) => setSubject(e.target.value)}
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow appearance-none bg-slate-700 border border-slate-600 rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
         />
       </div>
       <div>
-        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload the answer image</label>
-        <input className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"'
-         id="file_input" type="file" accept="image/jpeg" onChange={(e)=>setImage(e.target.files[0])}></input >
+        <label className="block mb-2 text-sm font-medium text-gray-300" htmlFor="file_input">Upload an image (optional)</label>
+        <input className='shadow appearance-none bg-slate-700 border border-slate-600 rounded w-full py-2 px-3 text-gray-300 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500'
+         id="file_input" type="file" accept="image/*" onChange={(e)=>setImage(e.target.files[0])}></input >
       </div>
       <div className="flex items-center justify-center">
         <button
         type='submit'
-          className="m-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="m-5 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         >
           Post
         </button>
