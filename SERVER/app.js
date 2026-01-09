@@ -45,7 +45,7 @@ async function fixUserIndexes(){
     }
 }
 
-app.use(cors({ origin: ["http://localhost:5173"], credentials: true }));
+app.use(cors({ origin: ["https://campus-connect-drab-two.vercel.app/"], credentials: true }));
 
 
 
