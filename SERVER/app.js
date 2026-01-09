@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.urlencoded())
 app.use(cookieParser());
 app.use(express.json())
-const mongoUrl='mongodb+srv://mathacharan30:test123@vyoma.nuphp.mongodb.net/?appName=Vyoma'
+const mongoUrl=process.env.MongoDB_URL;
 main().then(() => {
     console.log("connected to DB Successfully");
     // One-time index migration: remove legacy phone_1 unique index if it exists on users
