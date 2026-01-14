@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
-import { Textarea } from "@material-tailwind/react";
-import {
-    Card,
-    CardBody,
-    Typography,
-} from "@material-tailwind/react";
+import Card from '../components/ui/Card';
+import PrimaryButton from '../components/ui/PrimaryButton';
+import TextArea from '../components/ui/TextArea';
 
 import axios from "../axios";
 import { useParams } from 'react-router-dom';
@@ -72,44 +69,29 @@ export const Answer = () => {
     return (
         <div className="bg-slate-900 min-h-screen pb-20">
             <div className='flex items-center justify-center my-10'>
-                <Card className="mt-6 w-96 bg-slate-800 border border-slate-700">
-                    <CardBody>
-                        <Typography className='font-semibold text-white'>
-                            @{questionid}
-                        </Typography>
-                        <Typography className='font-semibold text-gray-300'>
-                            {question}
-                        </Typography>
-                        {qimage ? (
-                            <div className="p-4">
-                                <img src={qimage} alt="question image" className="w-full h-auto rounded shadow-md border border-slate-600" />
-                            </div>
-                        ) : null}
-                    </CardBody>
+                <Card className="mt-6 w-full max-w-2xl p-6">
+                    <div className='font-semibold text-white'>@{questionid}</div>
+                    <div className='font-semibold text-gray-300'>{question}</div>
+                    {qimage ? (
+                        <div className="p-4">
+                            <img src={qimage} alt="question image" className="w-full h-auto rounded shadow-md border border-slate-600" />
+                        </div>
+                    ) : null}
                 </Card>
             </div>
-            <form onSubmit={handleSubmit} className="max-w-md mx-auto bg-slate-800 border border-slate-700 p-8 shadow-md rounded">
-                <div className="mb-4">
-                    <label htmlFor="field1" className="block text-gray-300 text-sm font-bold mb-2">
-                        Answer the question
-                    </label>
-                    <div className="w-96">
-                        <Textarea rows={10} cols={10} onChange={(e) => setAnswer(e.target.value)} className="bg-slate-700 text-white border border-slate-600" />
+            <Card className="max-w-xl mx-auto p-6">
+                <form onSubmit={handleSubmit}>
+                    <TextArea label="Answer the question" rows={10} onChange={(e) => setAnswer(e.target.value)} />
+                    <div className="mt-4">
+                        <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="file_input">Upload the answer image</label>
+                        <input className="shadow appearance-none bg-slate-700 border border-slate-600 rounded w-full py-2 px-3 text-gray-300 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
+                            id="file_input" type="file" accept="image/jpeg" onChange={(e) => setImage(e.target.files[0])}></input >
                     </div>
-                </div>
-                <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="file_input">Upload the answer image</label>
-                <input className="shadow appearance-none bg-slate-700 border border-slate-600 rounded w-full py-2 px-3 text-gray-300 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
-                    id="file_input" type="file" accept="image/jpeg" onChange={(e) => setImage(e.target.files[0])}></input >
-
-                <div className="flex items-center justify-center my-10">
-                    <button
-                        type="submit"
-                        className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    >
-                        Submit Answer
-                    </button>
-                </div>
-            </form>
+                    <div className="mt-6">
+                        <PrimaryButton type="submit" className="w-full">Submit Answer</PrimaryButton>
+                    </div>
+                </form>
+            </Card>
         </div>
     );
 };

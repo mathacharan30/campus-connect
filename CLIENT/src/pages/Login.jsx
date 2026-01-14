@@ -1,18 +1,13 @@
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Typography,
-  Input,
-  Button,
-} from "@material-tailwind/react";
 import { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../slices/Authslice';
 import { useNavigate } from "react-router-dom";
 import { useNotifications } from '../slices/notifications';
 import {notify} from '../slices/notificationSlice';
+import Card from '../components/ui/Card';
+import PrimaryButton from '../components/ui/PrimaryButton';
+import InputField from '../components/ui/InputField';
+import AuthLayout from '../components/UiOverhaul/AuthLayout';
 export function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -29,38 +24,26 @@ export function Login() {
   }
  
   return (
-    <div className="flex items-center justify-center min-h-screen bg-slate-900">
-      <Card className="w-96 bg-slate-800 border border-slate-700">
-        <CardHeader
-          variant="gradient"
-          className="mb-4 grid h-28 place-items-center bg-gradient-to-r from-blue-600 to-blue-700"
-        >
-          <Typography variant="h3" color="white">
-            Login
-          </Typography>
-        </CardHeader>
-        <CardBody className="flex flex-col gap-4">
-          <Input required label="Username" type="string" size="lg" onChange={(e) => setUsername(e.target.value)} className="text-white" />
-          <Input required label="Password" type="password" size="lg" onChange={(e) => setPassword(e.target.value)} className="text-white" />
-        </CardBody>
-        <CardFooter className="pt-0">
-          <Button className="bg-blue-600 hover:bg-blue-700"  fullWidth onClick={() => loginHandler()}>
-            login
-          </Button>
-          <Typography variant="small" className="mt-6 flex justify-center text-gray-300">
-            Don&apos;t have an account?
-            <Typography
-              as="a"
-              href="#signup"
-              variant="small"
-              className="ml-1 font-bold text-blue-400 hover:text-blue-300"
-              onClick={() => navigate('/signup')}
-            >
-              Sign up
-            </Typography>
-          </Typography>
-        </CardFooter>
+    <AuthLayout>
+      <Card className="p-6">
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-text-primary">Login</h2>
+          <p className="text-text-secondary mt-1">Welcome back. Please sign in to continue.</p>
+        </div>
+        <div className="flex flex-col gap-4">
+          <InputField label="Username" required onChange={(e) => setUsername(e.target.value)} placeholder="Enter your username" />
+          <InputField label="Password" required type="password" onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" />
+        </div>
+        <div className="mt-6">
+          <PrimaryButton className="w-full" onClick={loginHandler}>Login</PrimaryButton>
+        </div>
+        <div className="mt-6 text-center text-text-secondary">
+          Don&apos;t have an account?
+          <button className="ml-2 text-brand-400 hover:text-brand-300 underline decoration-transparent hover:decoration-brand-300" onClick={() => navigate('/signup')}>
+            Sign up
+          </button>
+        </div>
       </Card>
-    </div>
+    </AuthLayout>
   );
 }

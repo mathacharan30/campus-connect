@@ -1,15 +1,11 @@
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Typography,
-  Input,
-  Button,
-} from "@material-tailwind/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from '../axios';
+import Card from '../components/ui/Card';
+import PrimaryButton from '../components/ui/PrimaryButton';
+import InputField from '../components/ui/InputField';
+import SelectField from '../components/ui/SelectField';
+import AuthLayout from '../components/UiOverhaul/AuthLayout';
 export function Signup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -47,48 +43,34 @@ export function Signup() {
   
   
   return (
-    <div className="flex items-center justify-center min-h-screen bg-slate-900">
-      <Card className="w-96 bg-slate-800 border border-slate-700">
-        <CardHeader
-          variant="gradient"
-          className="mb-4 grid h-28 place-items-center bg-gradient-to-r from-blue-600 to-blue-700"
-        >
-          <Typography variant="h3" color="white">
-            Sign Up
-          </Typography>
-        </CardHeader>
-        <CardBody className="flex flex-col gap-4">
-          <Input required label="Email" size="lg" onChange={(e) => setEmail(e.target.value)} className="text-white" />
-          <Input required label="Password" type="password" size="lg" onChange={(e) => setPassword(e.target.value)} className="text-white" />
-          <Input required label="Username" size="lg" onChange={(e) => setUsername(e.target.value)} className="text-white" />
-          <Input required label="USN (not for teachers)" size="lg" onChange={(e) => setUsn(e.target.value)} className="text-white" />
-          <Input required type='number' min='1' max='8' label="Semester (not for teachers)" size="lg" onChange={(e) => setSem(e.target.value)} className="text-white" />
-          <div className="w-auto">
-            <select className="p-2 m-2 bg-slate-700 text-white border border-slate-600 rounded" required name="who are you ?" onChange={(e)=>setRole(e.target.value)}>
+    <AuthLayout>
+      <Card className="p-6">
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-text-primary">Create your account</h2>
+          <p className="text-text-secondary mt-1">Join CampusConnect</p>
+        </div>
+        <div className="flex flex-col gap-4">
+          <InputField label="Email" required onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" />
+          <InputField label="Password" required type="password" onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" />
+          <InputField label="Username" required onChange={(e) => setUsername(e.target.value)} placeholder="Your display name" />
+          <InputField label="USN (students only)" onChange={(e) => setUsn(e.target.value)} placeholder="Enter your USN" />
+          <InputField label="Semester (students only)" type='number' min='1' max='8' onChange={(e) => setSem(e.target.value)} placeholder="1-8" />
+          <SelectField label="Role" required defaultValue={role} onChange={(e)=>setRole(e.target.value)}>
             <option value="student">Student</option>
-            <option value="alumni">Alumini</option>
+            <option value="alumni">Alumni</option>
             <option value="teacher">Teacher</option>
-          </select>
-          </div>
-        </CardBody>
-        <CardFooter className="pt-0">
-          <Button className="bg-blue-600 hover:bg-blue-700" fullWidth onClick={() => signupHandler()}>
-            Sign Up
-          </Button>
-          <Typography variant="small" className="mt-6 flex justify-center text-gray-300">
-            Already have an account?
-            <Typography
-              as="a"
-              href="#signup"
-              variant="small"
-              className="ml-1 font-bold text-blue-400 hover:text-blue-300"
-              onClick={() => navigate('/login')}
-            >
-              Sign in
-            </Typography>
-          </Typography>
-        </CardFooter>
+          </SelectField>
+        </div>
+        <div className="mt-6">
+          <PrimaryButton className="w-full" onClick={signupHandler}>Sign Up</PrimaryButton>
+        </div>
+        <div className="mt-6 text-center text-text-secondary">
+          Already have an account?
+          <button className="ml-2 text-brand-400 hover:text-brand-300 underline decoration-transparent hover:decoration-brand-300" onClick={() => navigate('/login')}>
+            Sign in
+          </button>
+        </div>
       </Card>
-    </div>
+    </AuthLayout>
   );
 }

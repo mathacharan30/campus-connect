@@ -1,11 +1,18 @@
 import React from 'react';
 
-export const Card = ({ className = '', children }) => {
+export const Card = ({ className = '', children, ...props }) => {
   return (
-    <div className={
-      "bg-slate-800/95 backdrop-blur-sm border border-slate-700 rounded-xl shadow-sm hover:shadow-md transition " +
-      className
-    }>
+    <div
+      data-animate="fade-up"
+      data-float
+      data-glow
+      {...props}
+      className={
+        "bg-slate-800/95 bg-blue-glow backdrop-blur-sm border border-slate-700 rounded-2xl " +
+        "shadow-sm hover:shadow-md transition " +
+        className
+      }
+    >
       {children}
     </div>
   );

@@ -23,7 +23,7 @@ function NavList() {
     }
   }
   
-  return (
+      return (
     <ul className="my-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       <Typography
         as="li"
@@ -31,7 +31,7 @@ function NavList() {
         color="blue-gray"
         className="p-1 font-medium"
       >
-        <Button className="bg-custom-blue" onClick={()=>navigate('/questions')}>
+        <Button className="bg-blue-600" onClick={()=>navigate('/questions')}>
           QNA
         </Button>
       </Typography>
@@ -41,7 +41,7 @@ function NavList() {
         color="blue-gray"
         className="p-1 font-medium"
       >
-        <Button className="bg-custom-blue" onClick={()=>navigate('/viewnotes')}>Lecture Materials</Button>
+        <Button className="bg-blue-600" onClick={()=>navigate('/viewnotes')}>Lecture Materials</Button>
       </Typography>
       <Typography
         as="li"
@@ -49,7 +49,7 @@ function NavList() {
         color="blue-gray"
         className="p-1 font-medium"
       >
-        <Button className="bg-custom-blue" onClick={()=>navigate('/jobs')}>Jobs & Hackathons</Button>
+        <Button className="bg-blue-600" onClick={()=>navigate('/jobs')}>Jobs & Hackathons</Button>
       </Typography>
       <Typography
         as="li"
@@ -57,7 +57,7 @@ function NavList() {
         color="blue-gray"
         className="p-1 font-medium"
       >
-        <Button className="bg-custom-blue" onClick={()=>navigate('/blogs')}>Placement Blogs </Button>
+        <Button className="bg-blue-600" onClick={()=>navigate('/blogs')}>Placement Blogs </Button>
       </Typography>
       <Typography
         as="li"
@@ -65,7 +65,7 @@ function NavList() {
         color="blue-gray"
         className="p-1 font-medium"
       >
-        <Button className="bg-custom-blue" onClick={()=>logout()}>Logout</Button>
+        <Button className="bg-blue-600" onClick={()=>logout()}>Logout</Button>
       </Typography>
     </ul>
   );
@@ -87,7 +87,7 @@ export function NavbarSimple() {
   }, []);
   const navigate = useNavigate();
   return (
-    <Navbar className="sticky top-0 z-40 bg-slate-900/80 backdrop-blur supports-[backdrop-filter]:bg-slate-900/60 border-b border-slate-700 mx-auto max-w-screen-xl px-6 py-3">
+    <Navbar className="sticky top-0 z-40 bg-slate-900/80 backdrop-blur supports-[backdrop-filter]:bg-slate-900/60 border-b border-slate-700 shadow-ambient mx-auto max-w-screen-xl px-6 py-3" data-glow>
       <div className="flex items-center justify-between text-gray-100">
         <Typography
           as="a"

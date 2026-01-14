@@ -4,8 +4,6 @@ import {
     CardBody,
     CardFooter,
     Typography,
-    Avatar,
-    Tooltip,
     Button,
 } from "@material-tailwind/react";
 
@@ -18,7 +16,7 @@ export function Blog({data}) {
     }
     
     return (
-        <Card className="max-w-[24rem] overflow-hidden bg-slate-800 border border-slate-700">
+        <Card className="overflow-hidden rounded-2xl bg-slate-800/95 border border-white/10 shadow-sm hover:shadow-md transition hover:-translate-y-0.5 will-change-transform">
             {/* <CardHeader
                 floated={false}
                 shadow={false}
@@ -30,19 +28,18 @@ export function Blog({data}) {
                     alt="blog-image"
                 />
             </CardHeader> */}
-            <CardBody>
-                <div className="md:flex-row md:items-center md:justify md:gap-3 flex-col gap-3">
-                    <Typography variant="h4" color="white">
-                        {data.name}
+            <CardBody className="p-5">
+                <div className="flex flex-col gap-2">
+                    <Typography variant="h5" className="text-white">
+                        @{data.name}
+                    </Typography>
+                    <Typography className="text-gray-300 line-clamp-3">
+                        {data.headline}
                     </Typography>
                 </div>
-                <Typography variant="lead" color="gray" className="mt-3 font-normal text-gray-400">
-                    {data.headline}
-                </Typography>
             </CardBody>
-            <CardFooter className="flex items-center justify-between">
-                <Button className="bg-blue-600 hover:bg-blue-700 text-white" onClick={()=>handleClick()}>view full blog</Button>
-                {/* <Typography className="font-normal">blog-upload date</Typography> */}
+            <CardFooter className="p-5 pt-0">
+                <Button className="bg-blue-600 hover:bg-blue-700 text-white" onClick={handleClick}>View Full Blog</Button>
             </CardFooter>
         </Card>
     );

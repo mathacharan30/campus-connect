@@ -1,9 +1,11 @@
 import { Blog } from "../components/Blog";
 import { Loading } from "../components/Loading";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "../axios";
-import { Button } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
+import PageContainer from "../components/ui/PageContainer";
+import SectionHeader from "../components/ui/SectionHeader";
+import PrimaryButton from "../components/ui/PrimaryButton";
 export const Blogs = () => {
 
     const [data, setData] = useState(null);
@@ -31,17 +33,28 @@ const navigate =useNavigate();
     if (loading) return <Loading />;
 
     return (
-        <div className="bg-slate-900 min-h-screen pb-20">
-            <div className="flex items-center justify-center">
-                <Button className="bg-blue-600 hover:bg-blue-700 my-10 w-2/3 text-white" onClick={() => navigate('/uploadblogs')}>Write a Blog</Button>
-            </div>
-            <div className="flex items-center justify-center my-10">
-                <div className="grid md:grid-cols-2 gap-10 ">
-                    {data.map((blog,index)=>{
-                        return <Blog key={index} data={blog}/>
-                    })} 
-                </div>
-            </div>
-        </div>
+      <PageContainer>
+        <SectionHeader
+          title="Placement Blogs"
+          subtitle="Read alumni experiences and interview tips"
+          actions={
+            <PrimaryButton onClick={() => navigate('/uploadblogs')}>
+              Write a Blog
+            </PrimaryButton>
+          }
+        />
+
+        {(!data || data.length === 0) ? (
+          <div className="text-center text-gray-400 py-16">
+            No blogs yet. Be the first to share your experience!
+          </div>
+        ) : (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {data.map((blog, index) => (
+              <Blog key={index} data={blog} />
+            ))}
+          </div>
+        )}
+      </PageContainer>
     )
 }
